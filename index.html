@@ -12,30 +12,75 @@
             height: 100%;
             overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf2f8;
         }
 
-        .background-img {
+        /* Hiệu ứng trượt ảnh nền liên tục */
+        .bg-slideshow {
             position: absolute;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            /* LƯU Ý: Đổi 'bg.png' thành tên chính xác của file ảnh nền bạn đang có trong cùng thư mục */
-            background-image: url('bg.png'); 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             z-index: 1;
         }
 
-        /* Cập nhật animation để giữ nguyên vị trí ở giữa khi nảy */
+        .bg-slideshow div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: fadeSlides 16s infinite;
+        }
+
+        /* Ảnh 1: Nền hồng 8/3 gốc (Lưu ý đổi đúng tên file của bạn) */
+        .bg-slideshow div:nth-child(1) {
+            background-image: url('bg.png'); 
+            animation-delay: 0s;
+        }
+        /* Ảnh 2: Tập thể nam 1 */
+        .bg-slideshow div:nth-child(2) {
+            background-image: url('image_9f2383.jpg');
+            animation-delay: 4s;
+        }
+        /* Ảnh 3: Tập thể nam 2 */
+        .bg-slideshow div:nth-child(3) {
+            background-image: url('image_9f2367.jpg');
+            animation-delay: 8s;
+        }
+        /* Ảnh 4: Tập thể nam 3 */
+        .bg-slideshow div:nth-child(4) {
+            background-image: url('image_9f2361.jpg');
+            animation-delay: 12s;
+        }
+
+        @keyframes fadeSlides {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            25% { opacity: 1; }
+            35% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* Lớp phủ hồng mờ để chữ và QR nổi bật trên nền ảnh thật */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 192, 203, 0.3);
+            z-index: 2;
+        }
+
         @keyframes floating-center {
             0% { transform: translate(-50%, -50%); }
             50% { transform: translate(-50%, calc(-50% - 15px)); }
             100% { transform: translate(-50%, -50%); }
         }
 
-        /* Căn giữa mã QR */
         .qr-card {
             position: absolute;
             top: 50%;
@@ -44,12 +89,12 @@
             background: rgba(255, 255, 255, 0.85);
             padding: 15px;
             border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.5);
             backdrop-filter: blur(8px);
             text-align: center;
             z-index: 10;
             animation: floating-center 4s ease-in-out infinite;
-            border: 2px solid rgba(255, 192, 203, 0.5);
+            border: 2px solid rgba(255, 192, 203, 0.8);
             transition: transform 0.3s ease;
         }
 
@@ -100,19 +145,24 @@
 </head>
 <body>
 
-    <div class="background-img" id="bg-container">
-        
-        <div class="qr-card">
-            <img src="qr.png" alt="Mã QR Yêu Thương">
-            <div class="qr-text">Quét để xem bất ngờ ♥</div>
-        </div>
+    <div class="bg-slideshow">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    
+    <div class="overlay"></div>
 
+    <div class="qr-card">
+        <img src="qr.png" alt="Mã QR Yêu Thương">
+        <div class="qr-text">Quét để xem bất ngờ ♥</div>
     </div>
 
     <script>
         function createPetals() {
-            const container = document.getElementById('bg-container');
-            const petalCount = 35; 
+            const container = document.body;
+            const petalCount = 40; 
 
             for (let i = 0; i < petalCount; i++) {
                 let petal = document.createElement('div');
