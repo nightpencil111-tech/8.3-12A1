@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc mừng 8/3 - 12A1</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .background-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* LƯU Ý: Đổi 'bg.png' thành tên chính xác của file ảnh nền bạn đang có trong cùng thư mục */
+            background-image: url('bg.png'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
+        /* Cập nhật animation để giữ nguyên vị trí ở giữa khi nảy */
+        @keyframes floating-center {
+            0% { transform: translate(-50%, -50%); }
+            50% { transform: translate(-50%, calc(-50% - 15px)); }
+            100% { transform: translate(-50%, -50%); }
+        }
+
+        /* Căn giữa mã QR */
+        .qr-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.85);
+            padding: 15px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
+            backdrop-filter: blur(8px);
+            text-align: center;
+            z-index: 10;
+            animation: floating-center 4s ease-in-out infinite;
+            border: 2px solid rgba(255, 192, 203, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .qr-card:hover {
+            animation-play-state: paused;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .qr-card img {
+            width: 220px;
+            height: 220px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .qr-text {
+            margin-top: 10px;
+            color: #d81b60;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .petal {
+            position: absolute;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 100%);
+            border-radius: 15px 0px 15px 0px;
+            opacity: 0.8;
+            z-index: 5;
+            pointer-events: none;
+            animation: fall linear infinite;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10%;
+                transform: translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                top: 110%;
+                transform: translateX(150px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-img" id="bg-container">
+        
+        <div class="qr-card">
+            <img src="qr.png" alt="Mã QR Yêu Thương">
+            <div class="qr-text">Quét để xem bất ngờ ♥</div>
+        </div>
+
+    </div>
+
+    <script>
+        function createPetals() {
+            const container = document.getElementById('bg-container');
+            const petalCount = 35; 
+
+            for (let i = 0; i < petalCount; i++) {
+                let petal = document.createElement('div');
+                petal.classList.add('petal');
+                
+                let size = Math.random() * 15 + 10; 
+                petal.style.width = size + 'px';
+                petal.style.height = size + 'px';
+                
+                petal.style.left = Math.random() * 100 + 'vw';
+                
+                let duration = Math.random() * 6 + 4; 
+                let delay = Math.random() * 5; 
+                petal.style.animationDuration = duration + 's';
+                petal.style.animationDelay = delay + 's';
+                
+                if(Math.random() > 0.5) {
+                    petal.style.background = 'linear-gradient(135deg, #ffc0cb 0%, #ff1493 100%)';
+                }
+                
+                container.appendChild(petal);
+            }
+        }
+
+        window.onload = createPetals;
+    </script>
+
+</body>
+</html>
